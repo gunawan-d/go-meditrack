@@ -13,15 +13,14 @@ import (
 	"meditrack/repository"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	psqlInfo := fmt.Sprintf(`host=%s port=%s user=%s password=%s dbname=%s sslmode=disable`,
 		os.Getenv("DB_HOST"),
@@ -69,8 +68,8 @@ func main() {
 	// r := gin.Default()
 	gin.SetMode(gin.ReleaseMode)
 
-    r := gin.New()
-    r.Use(gin.Logger(), gin.Recovery())
+	r := gin.New()
+	r.Use(gin.Logger(), gin.Recovery())
 
 	// Route User Register & login
 	r.POST("/api/users/register", controllers.RegisterHandler(*userRepo))
