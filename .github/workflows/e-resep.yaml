@@ -77,4 +77,4 @@ jobs:
         context: .
         file: Dockerfile
         push: true
-        tags: gunawand/go-resep:latest
+        tags: gunawand/go-meditrack:latest
