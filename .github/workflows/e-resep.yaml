@@ -1,0 +1,80 @@
+name: GO - Resep Master
+
+on:
+  push:
+    branches: [master]
+
+
+jobs:
+  secret-scanning:
+    runs-on: ubuntu-24.04
+    steps:
+    - uses: actions/checkout@v4
+    # Run TruffleHog inside Docker container
+    - name: Secret Scanning with TruffleHog
+      continue-on-error: false
+      run: |
+        docker run --rm \
+        -v ${{ github.workspace }}:/workspace \
+        -w /workspace \
+        trufflesecurity/trufflehog:latest filesystem . \
+        --exclude-paths trufflehog-excluded-paths.txt \
+        --fail --json --no-update > ${{ github.workspace }}/trufflehog-scan-result.json
+
+    - name: Archive TruffleHog Scan Result
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: trufflehog-scan-result
+        path: ${{ github.workspace }}/trufflehog-scan-result.json
+
+  sca-docker-scan:
+    runs-on: ubuntu-24.04
+    needs: [secret-scanning]
+    steps:
+    - uses: actions/checkout@v4
+    # Run TruffleHog inside Docker container
+    - name: SCA - Trivy Scan Docker Image
+      continue-on-error: false
+      run: |
+        docker run --rm \
+        -v ${{ github.workspace }}:/workspace \
+        -w /workspace \
+        aquasec/trivy:latest config ./Dockerfile  \
+        --exit-code=1 --format json | tee ${{ github.workspace }}/trivy-scan-dockerfile-report.json
+  
+  # Scan go.mod for vulnerabilities
+    - name: SCA - Trivy Scan go.mod
+      continue-on-error: false
+      run: |
+        docker run --rm \
+        -v ${{ github.workspace }}:/workspace \
+        -w /workspace \
+        aquasec/trivy:latest fs . \
+        --exit-code=1 --severity HIGH,CRITICAL --format json | tee ${{ github.workspace }}/trivy-scan-gomod-report.json
+
+  build:
+    runs-on: ubuntu-24.04
+    needs: [secret-scanning,sca-docker-scan]
+    environment: master
+    steps:
+    - uses: actions/checkout@v4
+    # Set up Docker Buildx
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    
+     #Login Github Container Registry
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Push to Github Container Registry
+    - name: Push to Github Container Registry
+      uses: docker/build-push-action@v6
+      with:
+        context: .
+        file: Dockerfile
+        push: true
+        tags: gunawand/go-resep:latest
