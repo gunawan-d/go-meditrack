@@ -1,10 +1,10 @@
--- Buat ENUM untuk role user
+-- +migrate Up
+
+
 CREATE TYPE user_role AS ENUM ('doctor', 'patient', 'pharmacist');
 
--- Buat ENUM untuk status prescription
 CREATE TYPE prescription_status AS ENUM ('pending', 'approved', 'rejected');
 
--- Buat ENUM untuk status transaksi
 CREATE TYPE transaction_status AS ENUM ('pending', 'completed', 'cancelled');
 
 -- Tabel Users
