@@ -1,10 +1,7 @@
 # MediTrack – Sistem Manajemen Resep & Stok Obat untuk Praktik Pribadi
 
 ## 📌 Deskripsi
-MediTrack adalah solusi digital untuk dokter yang menjalankan praktik pribadi dalam mengelola resep elektronik, riwayat pemeriksaan pasien, serta stok opname obat dengan lebih efisien. Dengan MediTrack, dokter dapat dengan mudah mencatat, mengakses, dan memperbarui riwayat resep pasien, memastikan stok obat selalu tersedia, serta memproses transaksi obat dengan lebih tertata.
-
-Aplikasi ini membantu dokter mengurangi risiko kehabisan stok obat penting, mempermudah pencatatan rekam medis terkait pengobatan pasien, serta meningkatkan akurasi dalam pengelolaan resep. Dengan sistem yang terintegrasi, dokter dapat lebih fokus pada perawatan pasien tanpa perlu khawatir tentang administrasi manual yang merepotkan.
-
+MediTrack adalah solusi digital untuk dokter yang menjalankan praktik pribadi dalam mengelola resep elektronik, riwayat pemeriksaan pasien, serta stok opname obat dengan lebih efisien. Dengan MediTrack, dokter dapat dengan mudah mencatat, mengakses, dan memperbarui riwayat resep pasien, memastikan stok obat selalu tersedia.
 
 
 ## 🛠️ Fitur Utama
