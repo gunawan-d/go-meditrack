@@ -32,7 +32,6 @@ Schema database terdiri dari 6 tabel utama:
 3. **Medicines** (id, name, category_id, stock, price, expiration_date)
 4. **Categories** (id, name) → Misal: Antibiotik, Vitamin
 5. **Transactions** (id, patient_id, prescription_id, medicine_id, total_price, status)
-6. **Payments** (id, transaction_id, amount, payment_status)
 
 ---
 
@@ -66,7 +65,7 @@ Semua route berada di dalam grup `/api` dan dilindungi oleh **JWT Middleware**.
 | PUT    | `/api/medicines/:id` | Mengupdate stok obat |
 | DELETE | `/api/medicines/:id` | Menghapus obat |
 
-### 🛒 Transaksi & Pembayaran
+### 🛒 Transaksi & Status Pembayaran
 | Method | Endpoint  | Deskripsi |
 |--------|----------|-----------|
 | POST   | `/api/transactions` | Pasien membeli obat dari resep |
