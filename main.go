@@ -96,7 +96,7 @@ func main() {
 
 	// Routes Transaction
 	authRoutes.POST("/transactions", transactionController.CreateTransaction)
-	authRoutes.POST("/payments", transactionController.ProcessPayment)
+	authRoutes.POST("/payments", paymentController.ProcessPayment)
 	authRoutes.GET("/payments/:id", paymentController.GetPaymentStatus)
 
 	r.Run(":8080")
